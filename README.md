@@ -5,7 +5,7 @@
 [![Cryptography](https://img.shields.io/badge/Crypto-pycryptodome-orange?logoColor=white)]
 [![Render](https://img.shields.io/badge/Deploy-Render-000?logo=render&logoColor=white)]
 
-A **cryptography web application** built with **Python Flask**, featuring **RSA, DES, TripleDES, AES** encryption/decryption, file upload/download, and key management.
+A **cryptography web application** built with **Python Flask**, implementing **RSA, DES, TripleDES, AES** encryption/decryption, file upload/download, and key management.
 
 🌐 **Live Demo:** [https://practiceais.onrender.com](https://practiceais.onrender.com)
 
@@ -14,17 +14,17 @@ A **cryptography web application** built with **Python Flask**, featuring **RSA,
 ## 🚀 Features
 
 - 🔑 **RSA Encryption/Decryption**  
-  - Tạo key pair tự động hoặc nhập thủ công.
+  - Automatically generate key pairs or input manually.
 - 🔒 **DES & TripleDES**  
-  - Mã hóa/giải mã văn bản và file.
+  - Encrypt/decrypt text and files.
 - 📝 **AES Encryption**  
-  - Mã hóa văn bản với chuẩn AES.
+  - Encrypt text using AES standard.
 - 📂 **File Handling**  
-  - Upload file để mã hóa/giải mã.  
-  - Download file output.
+  - Upload files for encryption/decryption.  
+  - Download encrypted/decrypted files.
 - 🖥️ **Frontend**  
-  - HTML/CSS giao diện thân thiện.  
-  - Tương tác trực tiếp với API Flask.
+  - User-friendly HTML/CSS interface.  
+  - Direct interaction with Flask API.
 
 ---
 
@@ -33,4 +33,4 @@ A **cryptography web application** built with **Python Flask**, featuring **RSA,
 - **Backend:** Python, Flask  
 - **Frontend:** HTML, CSS, JavaScript  
 - **Cryptography / Security Libraries:** pycryptodome (DES, TripleDES, AES), sympy (RSA key generation)  
-- **Server / Deployment:** Gunicorn, Render  
+- **Server / Deployment:** Gunicorn, Render 
