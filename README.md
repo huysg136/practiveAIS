@@ -1,52 +1,36 @@
-# FinalAssignment_PractiveAIS
+# 🔒 FinalAssignment_PractiveAIS
 
-**Project:**  
-Final Assignment Practive AIS Application  
+[![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)]
+[![Flask](https://img.shields.io/badge/Flask-3.1.2-black?logo=flask&logoColor=white)]
+[![Cryptography](https://img.shields.io/badge/Crypto-pycryptodome-orange?logoColor=white)]
+[![Render](https://img.shields.io/badge/Deploy-Render-000?logo=render&logoColor=white)]
 
-**Author:**  
-Ngô Trần Tiến, Thái Gia Huy, Phạm Hồng Diệu Hương, Phan Hồ Nhã Uyên  
+A **cryptography web application** built with **Python Flask**, featuring **RSA, DES, TripleDES, AES** encryption/decryption, file upload/download, and key management.
 
-**Description:**  
-Web app triển khai các thuật toán mã hóa và giải mã RSA, DES, TripleDES, AES với giao diện trực quan, upload/download file và quản lý khóa.
-
----
-
-## 🔹 Table of Contents
-
-- [Demo](#-demo)
-- [Features](#-features)
-- [Technologies](#-technologies)
+🌐 **Live Demo:** [https://practiceais.onrender.com](https://practiceais.onrender.com)
 
 ---
 
-## 🚀 Demo
+## 🚀 Features
 
-- Giao diện web trực quan, upload file, nhập text để mã hóa/giải mã.
-- Chạy trực tiếp trên [Render](https://practiceais.onrender.com/)
-
----
-
-## ✨ Features
-
-- **RSA Encryption/Decryption**
+- 🔑 **RSA Encryption/Decryption**  
   - Tạo key pair tự động hoặc nhập thủ công.
-- **DES & TripleDES**
+- 🔒 **DES & TripleDES**  
   - Mã hóa/giải mã văn bản và file.
-- **AES Encryption**
+- 📝 **AES Encryption**  
   - Mã hóa văn bản với chuẩn AES.
-- **File Handling**
-  - Upload file để mã hóa/giải mã.
+- 📂 **File Handling**  
+  - Upload file để mã hóa/giải mã.  
   - Download file output.
-- **Frontend**
-  - HTML/CSS giao diện thân thiện.
+- 🖥️ **Frontend**  
+  - HTML/CSS giao diện thân thiện.  
   - Tương tác trực tiếp với API Flask.
 
-## 🛠 Technologies
+---
+
+## 🛠 Tech Stack
 
 - **Backend:** Python, Flask  
-- **Frontend:** HTML, CSS
-- **Cryptography / Security Libraries:**  
-  - pycryptodome (DES, TripleDES, AES)  
-  - sympy (RSA key generation)  
+- **Frontend:** HTML, CSS, JavaScript  
+- **Cryptography / Security Libraries:** pycryptodome (DES, TripleDES, AES), sympy (RSA key generation)  
 - **Server / Deployment:** Gunicorn, Render  
-
