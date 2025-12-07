@@ -1,4 +1,4 @@
-# 🔒 FinalAssignment_PractiveAIS
+# 🔒 Final Assignment Practice AIS
 
 [![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)]
 [![Flask](https://img.shields.io/badge/Flask-3.1.2-black?logo=flask&logoColor=white)]
