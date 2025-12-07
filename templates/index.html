@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encryption System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Encryption System</h1>
+        <p class="subtitle">Secure your files with advanced encryption algorithms</p>
+        
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% for category, msg in messages %}
+                <div class="error-msg {{ category }}">{{ msg }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <!-- Algorithm Selection -->
+        <div class="section">
+            <div class="section-title">Select Algorithm</div>
+            <form action="/set_algorithm" method="post" class="algo-select">
+                <label>
+                    <input type="radio" name="algo" value="RSA"
+                        {% if selected_algo == 'RSA' %}checked{% endif %}>
+                    <span>RSA</span>
+                </label>
+
+                <label>
+                    <input type="radio" name="algo" value="AES"
+                        {% if selected_algo == 'AES' %}checked{% endif %}>
+                    <span>AES</span>
+                </label>
+
+                <label>
+                    <input type="radio" name="algo" value="DES"
+                        {% if selected_algo == 'DES' %}checked{% endif %}>
+                    <span>DES</span>
+                </label>
+
+                <label>
+                    <input type="radio" name="algo" value="3DES"
+                        {% if selected_algo == '3DES' %}checked{% endif %}>
+                    <span>Triple DES</span>
+                </label>
+            </form>
+        </div>
+
+        <!-- RSA Key Generation -->
+        <div id="rsa-section" style="display: none;">
+            <h3>🔑 Generate RSA Keys</h3>
+            <p style="font-size: 14px; color: #6b46c1; margin-bottom: 15px;">Generate a new pair of public and private keys for RSA encryption</p>
+            <form method="get" action="/enterprimes">
+                <button type="submit">Generate Keys</button>
+            </form>
+        </div>
+
+        <!-- Encrypt Section -->
+        <div class="section">
+            <div class="upload-section">
+                <h3 class="encrypt-icon">Encrypt File</h3>
+                <form method="post" action="/encrypt_with_key" enctype="multipart/form-data">
+                    <div class="file-input-wrapper">
+                        <label>Select file to encrypt:</label>
+                        <input type="file" name="input_file" required>
+                    </div>
+                    <button type="submit">Encrypt File</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Decrypt Section -->
+        <div class="section">
+            <div class="upload-section">
+                <h3 class="decrypt-icon">Decrypt File</h3>
+                <form method="post" action="/decrypt_with_key" enctype="multipart/form-data">
+                    <div class="file-input-wrapper">
+                        <label>Select encrypted file:</label>
+                        <input type="file" name="input_file" required>
+                    </div>
+                    <button type="submit">Decrypt File</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let algoRadios = document.querySelectorAll('input[name="algo"]');
+            let form = document.querySelector(".algo-select");
+            let rsaSection = document.getElementById("rsa-section");
+
+            function updateRSASection() {
+                let selected = document.querySelector('input[name="algo"]:checked').value;
+                rsaSection.style.display = selected === "RSA" ? "block" : "none";
+            }
+
+            updateRSASection();
+
+            algoRadios.forEach(radio => {
+                radio.addEventListener("change", function() {
+                    updateRSASection();
+                    form.submit();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

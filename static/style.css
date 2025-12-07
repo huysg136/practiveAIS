@@ -1,0 +1,292 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 500px;
+    width: 100%;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+h3 {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+/* Error messages */
+.error-msg {
+    background: #fff5f5;
+    border-left: 3px solid #e53e3e;
+    color: #c53030;
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.success {
+    background: #f0fff4;
+    border-left: 3px solid #38a169;
+    color: #22543d;
+}
+
+/* Algorithm selection */
+.section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.algo-select {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.algo-select label {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.algo-select label:hover {
+    background: #f0f0f0;
+    border-color: #bbb;
+}
+
+.algo-select input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.algo-select label:has(input:checked) {
+    background: #333;
+    color: white;
+    border-color: #333;
+}
+
+/* RSA section */
+#rsa-section {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin-bottom: 25px;
+}
+
+#rsa-section h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+/* File upload sections */
+.upload-section {
+    background: #fafafa;
+    padding: 18px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.upload-section h3 {
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.file-input-wrapper {
+    margin: 12px 0;
+}
+
+.file-input-wrapper label {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    background: white;
+    cursor: pointer;
+}
+
+input[type="file"]:focus {
+    outline: none;
+    border-color: #333;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    background: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #555;
+}
+
+button:active {
+    background: #222;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    .algo-select {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input[type="number"]:focus {
+    outline: none;
+    border-color: #333;
+}
+
+/* Back link */
+.back-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-link a {
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.back-link a:hover {
+    color: #333;
+}
+
+/* Keys generated page */
+.key-process {
+    margin: 20px 0;
+}
+
+.process-step {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.process-step h3 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.process-step p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 5px;
+}
+
+.process-step strong {
+    color: #333;
+}
+
+.key-box {
+    padding: 18px;
+    border-radius: 6px;
+    margin: 20px 0;
+    border: 2px solid #333;
+}
+
+.key-box.public {
+    background: #f9f9f9;
+}
+
+.key-box.private {
+    background: #f9f9f9;
+}
+
+.key-box h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.key-value {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #333;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    word-break: break-all;
+}

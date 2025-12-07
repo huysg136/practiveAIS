@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter 2 primes numbers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% if error %}
+            <p class="error-msg">{{ error }}</p>
+        {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% for category, msg in messages %}
+                <div class="error-msg {{ category }}">{{ msg }}</div>
+            {% endfor %}
+        {% endwith %}
+        
+        <h1>Enter Two Prime Numbers</h1>
+        
+        <form method="post" action="/generate_keys_manual">
+            <div class="form-group">
+                <label>Prime p:</label>
+                <input type="number" name="p" required>
+            </div>
+
+            <div class="form-group">
+                <label>Prime q:</label>
+                <input type="number" name="q" required>
+            </div>
+
+            <button type="submit">Compute Keys</button>
+
+            <div class="back-link">
+                <a href="/">← Back to Home</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
