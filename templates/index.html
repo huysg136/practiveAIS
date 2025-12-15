@@ -6,6 +6,12 @@
 </head>
 
 <body>
+    <!-- Navigation Menu -->
+    <div class="nav-container">
+        <a href="/" class="nav-link active">🔐 Encryption</a>
+        <a href="/bitcoin" class="nav-link">🪙 Bitcoin</a>
+    </div>
+
     <div class="container">
         <h1>Encryption System</h1>
         <p class="subtitle">Secure your files with advanced encryption algorithms</p>
@@ -47,7 +53,6 @@
             </form>
         </div>
 
-        <!-- RSA Key Generation -->
         <div id="rsa-section" style="display: none;">
             <h3>🔑 Generate RSA Keys</h3>
             <p style="font-size: 14px; color: #6b46c1; margin-bottom: 15px;">Generate a new pair of public and private keys for RSA encryption</p>
@@ -56,31 +61,31 @@
             </form>
         </div>
 
-        <!-- Encrypt Section -->
-        <div class="section">
-            <div class="upload-section">
-                <h3 class="encrypt-icon">Encrypt File</h3>
-                <form id="encryptForm" method="post" action="/encrypt_with_key" enctype="multipart/form-data">
-                    <div class="file-input-wrapper">
-                        <label>Select file to encrypt:</label>
-                        <input type="file" name="input_file" required>
-                    </div>
-                    <button type="submit">Encrypt File</button>
-                </form>
+        <div class="encrypt-decrypt-grid">
+            <div class="section">
+                <div class="upload-section">
+                    <h3 class="encrypt-icon">🔒 Encrypt File</h3>
+                    <form id="encryptForm" method="post" action="/encrypt_with_key" enctype="multipart/form-data">
+                        <div class="file-input-wrapper">
+                            <label>Select file to encrypt:</label>
+                            <input type="file" name="input_file" required>
+                        </div>
+                        <button type="submit">Encrypt File</button>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <!-- Decrypt Section -->
-        <div class="section">
-            <div class="upload-section">
-                <h3 class="decrypt-icon">Decrypt File</h3>
-                <form id="decryptForm" method="post" action="/decrypt_with_key" enctype="multipart/form-data">
-                    <div class="file-input-wrapper">
-                        <label>Select encrypted file:</label>
-                        <input type="file" name="input_file" required>
-                    </div>
-                    <button type="submit">Decrypt File</button>
-                </form>
+            <div class="section">
+                <div class="upload-section">
+                    <h3 class="decrypt-icon">🔓 Decrypt File</h3>
+                    <form id="decryptForm" method="post" action="/decrypt_with_key" enctype="multipart/form-data">
+                        <div class="file-input-wrapper">
+                            <label>Select encrypted file:</label>
+                            <input type="file" name="input_file" required>
+                        </div>
+                        <button type="submit">Decrypt File</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

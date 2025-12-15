@@ -7,15 +7,46 @@
 body {
     font-family: Arial, sans-serif;
     background: #f5f5f5;
-    padding: 20px;
+    padding: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     min-height: 100vh;
 }
 
+.nav-container {
+    width: 100%;
+    background: #000000;
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.nav-link {
+    color: #ffffff;
+    background-color: #333333;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.nav-link:hover {
+    color: white;
+    background: #535353;
+}
+
+.nav-link.active {
+    background: #666666;
+}
+
 .container {
-    max-width: 500px;
+    margin: auto;
+    max-width: 800px;
     width: 100%;
     background: white;
     padding: 30px;
@@ -26,8 +57,15 @@ body {
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 25px;
-    font-size: 24px;
+    margin-bottom: 5px;
+    font-size: 26px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
 h3 {
@@ -59,7 +97,7 @@ h3 {
 }
 
 .section-title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #333;
     margin-bottom: 12px;
@@ -81,7 +119,7 @@ h3 {
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .algo-select label:hover {
@@ -114,6 +152,12 @@ h3 {
     margin-bottom: 10px;
 }
 
+#rsa-section p {
+    font-size: 14px;
+    color: #6b46c1;
+    margin-bottom: 15px;
+}
+
 /* File upload sections */
 .upload-section {
     background: #fafafa;
@@ -123,8 +167,19 @@ h3 {
 }
 
 .upload-section h3 {
-    font-size: 15px;
+    font-size: 17px;
     margin-bottom: 12px;
+}
+
+/* Encrypt/Decrypt side by side */
+.encrypt-decrypt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.encrypt-decrypt-grid .section {
+    margin-bottom: 0;
 }
 
 .file-input-wrapper {
@@ -133,7 +188,7 @@ h3 {
 
 .file-input-wrapper label {
     display: block;
-    font-size: 13px;
+    font-size: 15px;
     color: #555;
     margin-bottom: 6px;
 }
@@ -143,12 +198,38 @@ input[type="file"] {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 15px;
     background: white;
     cursor: pointer;
 }
 
 input[type="file"]:focus {
+    outline: none;
+    border-color: #333;
+}
+
+/* Input fields */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.input-group input:focus, .input-group select:focus {
     outline: none;
     border-color: #333;
 }
@@ -159,12 +240,13 @@ button {
     background: #333;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     transition: background 0.2s;
+    margin: 2px;
 }
 
 button:hover {
@@ -173,17 +255,6 @@ button:hover {
 
 button:active {
     background: #222;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-    .container {
-        padding: 20px;
-    }
-
-    .algo-select {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Form groups */
@@ -291,6 +362,7 @@ button:active {
     word-break: break-all;
 }
 
+/* Modal */
 .modal {
     display: none;  
     position: fixed;
@@ -310,10 +382,30 @@ button:active {
     border-radius: 10px;
 }
 
+.modal-content h3 {
+    margin-bottom: 15px;
+}
+
+.modal-content label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
 .modal textarea {
     width: 100%;
     height: 80px;
     margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+}
+
+.modal textarea:focus {
+    outline: none;
+    border-color: #333;
 }
 
 .modal-buttons {
@@ -321,3 +413,144 @@ button:active {
     justify-content: flex-end;
     gap: 10px;
 }
+
+.modal-buttons button {
+    width: auto;
+    padding: 10px 20px;
+}
+
+.modal-buttons button:first-child {
+    background: #999;
+}
+
+.modal-buttons button:first-child:hover {
+    background: #777;
+}
+
+.bitcoin-container {
+    width: 1100px;
+    max-width: 1100px;
+    margin: 10px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* .bitcoin-header {
+    background: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+} */
+
+.bitcoin-header h1 {
+    font-size: 25px;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.bitcoin-content {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 0;
+    min-height: 600px;
+}
+
+.bitcoin-sidebar {
+    background: transparent;
+    padding: 20px;
+    //border-right: 2px solid #e0e0e0;
+}
+
+.bitcoin-main {
+    padding: 20px;
+}
+
+.bitcoin-section {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.bitcoin-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+#log {
+    background: #1e1e1e;
+    color: #00ff00;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    height: 200px;
+    overflow-y: auto;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+.utxo-list, .mempool-list, .chain-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.utxo-item, .tx-item, .block-item {
+    background: #f8f9fa;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border-left: 4px solid #333;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: #666666;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.tab-btn.active {
+    background: #333333;
+    border-bottom: 3px solid #333;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+#walletsList > div {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+}
+
+.tx-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+

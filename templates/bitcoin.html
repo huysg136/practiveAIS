@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Bitcoin Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="nav-container">
+        <a href="/" class="nav-link">🔐 Encryption</a>
+        <a href="/bitcoin" class="nav-link active">🪙 Bitcoin</a>
+    </div>
+
+    <div class="bitcoin-container">
+        <!-- <div class="bitcoin-header">
+            <h1>Mini Bitcoin Transaction</h1>
+            <p>Educational UTXO + P2PKH + Node Validation System</p>
+        </div> -->
+
+        <div class="bitcoin-content">
+            <div class="bitcoin-sidebar">
+                <div class="bitcoin-section">
+                    <h2>Wallets</h2>
+                    <div class="input-group">
+                        <label>Wallet Name</label>
+                        <input type="text" id="walletName" placeholder="Enter wallet name">
+                    </div>
+                    <button onclick="generateWallet()">Generate Wallet</button>
+                    
+                    <div id="walletsList" style="margin-top: 20px;"></div>
+                </div>
+
+                <div class="bitcoin-section">
+                    <h2>Genesis UTXO</h2>
+                    <div class="input-group">
+                        <label>Select Wallet</label>
+                        <select id="genesisWallet"></select>
+                    </div>
+                    <div class="input-group">
+                        <label>Amount</label>
+                        <input type="number" id="genesisAmount" value="100">
+                    </div>
+                    <button onclick="createGenesis()">Create Genesis UTXO</button>
+                </div>
+
+                <div class="bitcoin-section">
+                    <h2>Actions</h2>
+                    <button onclick="mineBlock()">Mine Block</button>
+                    <button onclick="refreshAll()">Refresh All</button>
+                </div>
+            </div>
+
+            <div class="bitcoin-main">
+                <div id="log"></div>
+
+                <div class="bitcoin-section">
+                    <h2>Create Transaction</h2>
+                    <div class="tx-form-grid">
+                        <div class="input-group">
+                            <label>Sender</label>
+                            <select id="txSender"></select>
+                        </div>
+                        <div class="input-group">
+                            <label>Recipient</label>
+                            <select id="txRecipient"></select>
+                        </div>
+                        <div class="input-group">
+                            <label>Amount</label>
+                            <input type="number" id="txAmount" value="10">
+                        </div>
+                        <div class="input-group">
+                            <label>Fee</label>
+                            <input type="number" id="txFee" value="1">
+                        </div>
+                    </div>
+                    <button onclick="createTransaction()">Create & Sign Transaction</button>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('utxo')">UTXO Set</button>
+                    <button class="tab-btn" onclick="switchTab('mempool')">Mempool</button>
+                    <button class="tab-btn" onclick="switchTab('blockchain')">Blockchain</button>
+                </div>
+
+                <div id="utxo-tab" class="tab-content active">
+                    <div class="bitcoin-section">
+                        <h2>UTXO Set</h2>
+                        <div id="utxoList" class="utxo-list"></div>
+                    </div>
+                </div>
+
+                <div id="mempool-tab" class="tab-content">
+                    <div class="bitcoin-section">
+                        <h2>Mempool</h2>
+                        <div id="mempoolList" class="mempool-list"></div>
+                    </div>
+                </div>
+
+                <div id="blockchain-tab" class="tab-content">
+                    <div class="bitcoin-section">
+                        <h2>Blockchain</h2>
+                        <div id="chainList" class="chain-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let wallets = {};
+
+        function log(msg) {
+            const logEl = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            logEl.innerHTML += `[${time}] ${msg}\n`;
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`${tab}-tab`).classList.add('active');
+        }
+
+        function updateWalletSelects() {
+            const selects = ['genesisWallet', 'txSender', 'txRecipient'];
+            selects.forEach(id => {
+                const select = document.getElementById(id);
+                select.innerHTML = '<option value="">Select...</option>';
+                Object.keys(wallets).forEach(name => {
+                    select.innerHTML += `<option value="${name}">${name}</option>`;
+                });
+            });
+
+            const list = document.getElementById('walletsList');
+            list.innerHTML = '';
+            Object.entries(wallets).forEach(([name, data]) => {
+                list.innerHTML += `<div>
+                    <strong>${name}</strong><br>
+                    <small style="color: #666;">Hash: ${data.pubkey_hash.substring(0, 16)}...</small>
+                </div>`;
+            });
+        }
+
+        async function generateWallet() {
+            const name = document.getElementById('walletName').value.trim();
+            if (!name) {
+                alert('Please enter wallet name');
+                return;
+            }
+
+            const response = await fetch('/bitcoin/generate_wallet', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name})
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                wallets[name] = {pubkey_hash: data.pubkey_hash, pubkey: data.pubkey};
+                log(`✅ Generated wallet: ${name}`);
+                updateWalletSelects();
+                document.getElementById('walletName').value = '';
+            }
+        }
+
+        async function createGenesis() {
+            const wallet = document.getElementById('genesisWallet').value;
+            const amount = parseInt(document.getElementById('genesisAmount').value);
+
+            if (!wallet) {
+                alert('Select a wallet');
+                return;
+            }
+
+            const response = await fetch('/bitcoin/create_genesis', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({wallet_name: wallet, amount})
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                log(`✅ Created genesis UTXO: ${amount} units for ${wallet}`);
+                log(`   TXID: ${data.txid.substring(0, 16)}...`);
+                refreshAll();
+            }
+        }
+
+        async function createTransaction() {
+            const sender = document.getElementById('txSender').value;
+            const recipient = document.getElementById('txRecipient').value;
+            const amount = parseInt(document.getElementById('txAmount').value);
+            const fee = parseInt(document.getElementById('txFee').value);
+
+            if (!sender || !recipient) {
+                alert('Select sender and recipient');
+                return;
+            }
+
+            const response = await fetch('/bitcoin/create_transaction', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({sender, recipient, amount, fee})
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                log(`✅ Transaction created and validated!`);
+                log(`   ${sender} → ${recipient}: ${amount} units`);
+                log(`   Fee: ${fee} | Change: ${data.change}`);
+                log(`   TXID: ${data.txid.substring(0, 16)}...`);
+                refreshAll();
+            } else {
+                log(`❌ Transaction failed: ${data.message || 'Insufficient balance (amount + fee)'}`);
+            }
+        }
+
+        async function mineBlock() {
+            const response = await fetch('/bitcoin/mine_block', {method: 'POST'});
+            const data = await response.json();
+            
+            if (data.success) {
+                log(`⛏️ ${data.message}`);
+                refreshAll();
+            } else {
+                log(`❌ ${data.message}`);
+            }
+        }
+
+        async function refreshAll() {
+            const utxoRes = await fetch('/bitcoin/get_utxos');
+            const utxoData = await utxoRes.json();
+            
+            const utxoList = document.getElementById('utxoList');
+            utxoList.innerHTML = '';
+            utxoData.utxos.forEach(u => {
+                utxoList.innerHTML += `<div class="utxo-item">
+                    <strong>TXID:</strong> ${u.txid.substring(0, 16)}...:${u.vout}<br>
+                    <strong>Value:</strong> ${u.value} units<br>
+                    <strong>Lock:</strong> ${u.pubkey_hash.substring(0, 20)}...
+                </div>`;
+            });
+
+            const mempoolRes = await fetch('/bitcoin/get_mempool');
+            const mempoolData = await mempoolRes.json();
+            
+            const mempoolList = document.getElementById('mempoolList');
+            mempoolList.innerHTML = '';
+            Object.entries(mempoolData.mempool).forEach(([txid, tx]) => {
+                mempoolList.innerHTML += `<div class="tx-item">
+                    <strong>TXID:</strong> ${txid.substring(0, 16)}...<br>
+                    <strong>Inputs:</strong> ${tx.vin.length} | <strong>Outputs:</strong> ${tx.vout.length}
+                </div>`;
+            });
+
+            if (Object.keys(mempoolData.mempool).length === 0) {
+                mempoolList.innerHTML = '<p style="color: #999; text-align: center;">Mempool is empty</p>';
+            }
+
+            const chainRes = await fetch('/bitcoin/get_blockchain');
+            const chainData = await chainRes.json();
+            
+            const chainList = document.getElementById('chainList');
+            chainList.innerHTML = '';
+            chainData.chain.forEach(block => {
+                chainList.innerHTML += `<div class="block-item">
+                    <strong>Block #${block.height}</strong><br>
+                    <strong>Transactions:</strong> ${block.txids.length}<br>
+                    <strong>Timestamp:</strong> ${new Date(block.timestamp * 1000).toLocaleString()}
+                </div>`;
+            });
+
+            if (chainData.chain.length === 0) {
+                chainList.innerHTML = '<p style="color: #999; text-align: center;">No blocks mined yet</p>';
+            }
+        }
+
+        log('🚀 Mini Bitcoin Demo initialized');
+        log('👉 Start by generating wallets');
+        refreshAll();
+    </script>
+</body>
+</html>
