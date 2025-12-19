@@ -36,10 +36,11 @@ class RSADemo:
 
     def Encrypt(plaintext:str, public_key):
         e, n = public_key
+        plaintext = plaintext.upper()
         cipher_block = []
 
         for ch in plaintext:
-            m = ord(ch)
+            m = ord(ch) - ord('A')
             if m>=n:
                 raise ValueError(f"Character '{ch}' has code {m}, which is >= n={n}. Choose larger primes.")
             c = pow(m, e, n)
@@ -52,6 +53,6 @@ class RSADemo:
 
         for c in cipher_block:
             m = pow(c, d, n)
-            plaintext_char.append(chr(m))
+            plaintext_char.append(chr(m + ord('A')))
         
         return "".join(plaintext_char)

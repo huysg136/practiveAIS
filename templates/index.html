@@ -68,7 +68,7 @@
                     <form id="encryptForm" method="post" action="/encrypt_with_key" enctype="multipart/form-data">
                         <div class="file-input-wrapper">
                             <label>Select file to encrypt:</label>
-                            <input type="file" name="input_file" required>
+                            <input type="file" name="input_file" accept=".txt" required>
                         </div>
                         <button type="submit">Encrypt File</button>
                     </form>
@@ -81,7 +81,7 @@
                     <form id="decryptForm" method="post" action="/decrypt_with_key" enctype="multipart/form-data">
                         <div class="file-input-wrapper">
                             <label>Select encrypted file:</label>
-                            <input type="file" name="input_file" required>
+                            <input type="file" name="input_file" accept=".txt" required>
                         </div>
                         <button type="submit">Decrypt File</button>
                     </form>
